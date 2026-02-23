@@ -134,3 +134,65 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
+
+/* --- Workforce Solutions cards --- */
+
+/* First card is featured by default (light + dark) */
+.lc-category-grid .lc-category-card:first-child {
+  background-color: #E61E25;
+  color: #ffffff;
+}
+
+.lc-category-grid .lc-category-card:first-child .lc-category-meta {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.lc-category-grid .lc-category-card:first-child .lc-category-icon {
+  filter: brightness(0) invert(1);
+}
+
+/* Hover: hovered card becomes red */
+.lc-category-grid .lc-category-card:hover {
+  background-color: #E61E25;
+  color: #ffffff;
+}
+
+.lc-category-grid .lc-category-card:hover .lc-category-meta {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.lc-category-grid .lc-category-card:hover .lc-category-icon {
+  filter: brightness(0) invert(1);
+}
+
+/* When any card is hovered, remove default red from first card */
+.lc-category-grid:has(.lc-category-card:hover) .lc-category-card:first-child {
+  background-color: #ffffff;
+  color: #111827; /* gray-900 */
+}
+
+.lc-category-grid:has(.lc-category-card:hover)
+  .lc-category-card:first-child
+  .lc-category-meta {
+  color: #6b7280; /* gray-500 */
+}
+
+.lc-category-grid:has(.lc-category-card:hover)
+  .lc-category-card:first-child
+  .lc-category-icon {
+  filter: none;
+  
+}
+
+/* Dark mode tweaks */
+.dark .lc-category-grid:has(.lc-category-card:hover)
+  .lc-category-card:first-child {
+  background-color: #4b4b4b;
+  color: #ffffff;
+}
+
+.dark .lc-category-grid:has(.lc-category-card:hover)
+  .lc-category-card:first-child
+  .lc-category-meta {
+  color: #e5e7eb;
+}

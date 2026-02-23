@@ -1,10 +1,11 @@
-import Image from "next/image";
+import { HeroSection } from "@/components/sections/hero";
+import { WorkforceSolutionsSection } from "@/components/sections/workforce-solutions-section";
 
 export default function Home() {
   return (
-    <h1>
-      The quick brown fox jumps over the lazy dog 
-      LaborCrisis V2 Initiating
-    </h1>
+    <main>
+      <HeroSection />
+      <WorkforceSolutionsSection />
+    </main>
   );
 }
