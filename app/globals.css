@@ -135,9 +135,19 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-/* --- Workforce Solutions cards --- */
+/* === Workforce Solutions cards === */
 
-/* First card is featured by default (light + dark) */
+/* 0) Dark base – grey cards, white text, icons unchanged */
+.dark .lc-category-grid .lc-category-card {
+  background-color: #4b4b4b;
+  color: #ffffff;
+}
+
+.dark .lc-category-grid .lc-category-card .lc-category-meta {
+  color: #e5e7eb;
+}
+
+/* 1) First card featured by default (light & dark) */
 .lc-category-grid .lc-category-card:first-child {
   background-color: #E61E25;
   color: #ffffff;
@@ -147,11 +157,7 @@
   color: rgba(255, 255, 255, 0.85);
 }
 
-.lc-category-grid .lc-category-card:first-child .lc-category-icon {
-  filter: brightness(0) invert(1);
-}
-
-/* Hover: hovered card becomes red */
+/* 2) Hover: hovered card becomes red (both light & dark) */
 .lc-category-grid .lc-category-card:hover {
   background-color: #E61E25;
   color: #ffffff;
@@ -161,11 +167,8 @@
   color: rgba(255, 255, 255, 0.85);
 }
 
-.lc-category-grid .lc-category-card:hover .lc-category-icon {
-  filter: brightness(0) invert(1);
-}
-
-/* When any card is hovered, remove default red from first card */
+/* 3) When ANY card is hovered, the first card goes back to normal
+      so only one card is red at a time. */
 .lc-category-grid:has(.lc-category-card:hover) .lc-category-card:first-child {
   background-color: #ffffff;
   color: #111827; /* gray-900 */
@@ -177,17 +180,10 @@
   color: #6b7280; /* gray-500 */
 }
 
-.lc-category-grid:has(.lc-category-card:hover)
-  .lc-category-card:first-child
-  .lc-category-icon {
-  filter: none;
-  
-}
-
-/* Dark mode tweaks */
+/* 4) Dark-mode version of "first card goes back to normal" */
 .dark .lc-category-grid:has(.lc-category-card:hover)
   .lc-category-card:first-child {
-  background-color: #4b4b4b;
+  background-color: #4b4b4b; /* same as other dark cards */
   color: #ffffff;
 }
 
@@ -196,3 +192,6 @@
   .lc-category-meta {
   color: #e5e7eb;
 }
+
+/* IMPORTANT: still no .lc-category-icon rules.
+   Icons keep their SVG color in ALL states. */

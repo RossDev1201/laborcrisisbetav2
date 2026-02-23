@@ -93,7 +93,7 @@ export function WorkforceSolutionsSection() {
                 lc-category-card
                 flex w-full flex-col justify-center
                 rounded-[20px] px-5 py-20
-                bg-white text-[#339989]
+                bg-white text-gray-900
                 shadow-[0_10px_30px_rgba(15,23,42,0.12)]
                 transition-colors
                 dark:bg-[#4B4B4B] dark:text-white
@@ -110,7 +110,7 @@ export function WorkforceSolutionsSection() {
                     alt={category.title}
                     width={90}
                     height={90}
-                    className="lc-category-icon h-[90px] w-[90px] transition"
+                    className="lc-category-icon h-[90px] w-[90px]"
                   />
                 </div>
 
