@@ -87,9 +87,9 @@ export function FeaturedJobsSection() {
               key={job.id}
               className="
                 flex h-full flex-col justify-between
-                rounded-[24px] bg-[#f5f5f5] px-6 py-6
+                rounded-[24px] bg-[#dfdede] px-6 py-6
                 shadow-[0_10px_30px_rgba(15,23,42,0.08)]
-                dark:bg-[#4b4b4b]
+                dark:bg-[#444444]
               "
             >
               {/* Top content */}

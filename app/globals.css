@@ -195,3 +195,37 @@
 
 /* IMPORTANT: still no .lc-category-icon rules.
    Icons keep their SVG color in ALL states. */
+
+   /* === Testimonials (Reviews) === */
+
+/* Hide all panels by default */
+.lc-testimonial-panels .lc-testimonial-panel {
+  display: none;
+}
+
+/* Base avatar ring */
+.lc-testimonial-avatar-dot {
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  padding: 3px; /* thickness of ring */
+  transition: border-color 150ms ease-out, transform 150ms ease-out;
+}
+
+/* Show the panel that matches the checked radio */
+#t1:checked ~ .lc-testimonial-panels .lc-testimonial-panel[data-testimonial="t1"],
+#t2:checked ~ .lc-testimonial-panels .lc-testimonial-panel[data-testimonial="t2"],
+#t3:checked ~ .lc-testimonial-panels .lc-testimonial-panel[data-testimonial="t3"],
+#t4:checked ~ .lc-testimonial-panels .lc-testimonial-panel[data-testimonial="t4"],
+#t5:checked ~ .lc-testimonial-panels .lc-testimonial-panel[data-testimonial="t5"] {
+  display: block;
+}
+
+/* Highlight the active avatar with a red ring */
+#t1:checked ~ .lc-testimonial-avatars label[for="t1"] .lc-testimonial-avatar-dot,
+#t2:checked ~ .lc-testimonial-avatars label[for="t2"] .lc-testimonial-avatar-dot,
+#t3:checked ~ .lc-testimonial-avatars label[for="t3"] .lc-testimonial-avatar-dot,
+#t4:checked ~ .lc-testimonial-avatars label[for="t4"] .lc-testimonial-avatar-dot,
+#t5:checked ~ .lc-testimonial-avatars label[for="t5"] .lc-testimonial-avatar-dot {
+  border-color: #E61E25;
+  transform: scale(1.05);
+}
