@@ -85,7 +85,7 @@ export function WorkforceSolutionsSection() {
         </div>
 
         {/* Grid */}
-        <div className="lc-category-grid mt-10 grid gap-x-12 gap-y-12 md:mt-12 md:grid-cols-2 lg:grid-cols-3">
+        <div className="lc-category-grid mt-10 grid gap-y-8 md:mt-12 md:grid-cols-2 md:gap-x-10 md:gap-y-10 lg:grid-cols-3">
           {categories.map((category) => (
             <article
               key={category.id}
@@ -93,17 +93,14 @@ export function WorkforceSolutionsSection() {
                 lc-category-card
                 flex w-full flex-col justify-center
                 rounded-[20px] px-5 py-20
+                min-h-[255px]
                 bg-white text-gray-900
                 shadow-[0_10px_30px_rgba(15,23,42,0.12)]
                 transition-colors
                 dark:bg-[#4B4B4B] dark:text-white
               "
-              style={{
-                maxWidth: 371,
-                minHeight: 255,
-              }}
             >
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-4">
                 <div className="shrink-0">
                   <Image
                     src={category.iconSrc}
