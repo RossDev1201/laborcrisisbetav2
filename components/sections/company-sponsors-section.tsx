@@ -2,17 +2,14 @@
 import Image from "next/image";
 
 const sponsorLogos = [
-  { src: "/sponsor-agoda.svg", alt: "Agoda" },
-  { src: "/sponsor-antler.svg", alt: "Antler" },
-  { src: "/sponsor-bandlab.svg", alt: "BandLab Technologies" },
-  { src: "/sponsor-breadtalk.svg", alt: "BreadTalk" },
-  { src: "/sponsor-camella.svg", alt: "Camella Homes" },
-  { src: "/sponsor-capital-land.svg", alt: "CapitaLand" },
-  { src: "/sponsor-grab.svg", alt: "Grab" },
-  { src: "/sponsor-horizon.svg", alt: "Horizon Fuel Cell Technologies" },
-  { src: "/sponsor-nestle.svg", alt: "Nestlé" },
-  { src: "/sponsor-paymaya.svg", alt: "PayMaya" },
-  { src: "/sponsor-san-miguel.svg", alt: "San Miguel Corporation" },
+  { src: "/client-01.svg", alt: "client-01" },
+  { src: "/client-02.svg", alt: "client-02" },
+  { src: "/client-03.svg", alt: "client-03" },
+  { src: "/client-04.svg", alt: "client-04" },
+  { src: "/client-05.svg", alt: "client-05" },
+  { src: "/client-06.svg", alt: "client-06" },
+  { src: "/client-07.svg", alt: "client-07" },
+  { src: "/client-08.svg", alt: "client-08" },
 ];
 
 // If your files are .png instead, just replace `.svg` with `.png` in all src values above.
@@ -34,7 +31,7 @@ export function CompanySponsorsSection() {
             id="company-sponsors-heading"
             className="text-[24px] font-semibold leading-tight text-gray-900 md:text-[28px] lg:text-[32px] dark:text-white"
           >
-            More than 5,000 companies sponsorship with us
+            More than 5,000 Clients with us
           </h2>
         </div>
 
