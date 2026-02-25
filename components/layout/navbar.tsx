@@ -11,21 +11,28 @@ export function Navbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6 lg:px-8">
         {/* Logo: LC icon + wordmark */}
         <Link href="/" className="flex items-center gap-3">
-          <Image
-            src="/labor-crisis-logo-01.svg"
-            alt="Labor Crisis logo"
-            width={60}
-            height={60}
-            className="h-10 w-auto md:h-12"
-            priority
-          />
+  <Image
+    src="/labor-crisis-logo-01.svg"
+    alt="Labor Crisis logo"
+    width={60}
+    height={60}
+    className="h-10 w-auto md:h-12"
+    priority
+  />
 
-          <span
-            className={`${technopile.className} text-[24px] md:text-[28px] lg:text-[32px] tracking-[0.2em] leading-none text-black dark:text-white`}
-          >
-            LABOR CRISIS
-          </span>
-        </Link>
+  <span
+    className={`
+      ${technopile.className}
+      text-[24px] md:text-[28px] lg:text-[32px]
+      tracking-[0.2em]
+      leading-none
+      text-black dark:text-white
+      relative -translate-y-[4px]  // 👈 key part
+    `}
+  >
+    LABOR CRISIS
+  </span>
+</Link>
 
         {/* Desktop navigation */}
         <nav className="hidden items-center gap-8 md:flex">

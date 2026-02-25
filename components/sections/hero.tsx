@@ -60,7 +60,7 @@ export function HeroSection() {
             className="text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl"
           >
             <span className="block">When Labor is Critical,</span>
-            <span className="mt-2 block text-[#E61E25]">We Deliver</span>
+            <span className="mt-2 block text-[#190202]">We Deliver</span>
           </h1>
         </div>
 
