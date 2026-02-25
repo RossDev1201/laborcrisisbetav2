@@ -229,3 +229,54 @@
   border-color: #E61E25;
   transform: scale(1.05);
 }
+
+/* Marquee base layout */
+.lc-marquee-row {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Fade edges a bit so logos don't abruptly cut off */
+.lc-marquee-row {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.lc-marquee-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 4rem;
+  white-space: nowrap;
+  /* Move left by default; bottom row overrides with reverse */
+  animation: lc-marquee-left 30s linear infinite;
+}
+
+.lc-marquee-track--reverse {
+  animation-name: lc-marquee-right;
+}
+
+.lc-marquee-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Keyframes: left-moving row */
+@keyframes lc-marquee-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Keyframes: right-moving row */
+@keyframes lc-marquee-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

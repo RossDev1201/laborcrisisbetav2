@@ -3,6 +3,7 @@ import { WorkforceSolutionsSection } from "@/components/sections/workforce-solut
 import  {FeaturedJobsSection} from "@/components/sections/featured-job-section"
 import { TestimonialsSection } from "@/components/sections/testimonial-section";
 import { UploadCvSection } from "@/components/sections/upload-cv-section";
+import  {CompanySponsorsSection} from "@/components/sections/company-sponsors-section"
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <FeaturedJobsSection/>
       <TestimonialsSection/>
       <UploadCvSection/>
+      <CompanySponsorsSection/>
     </main>
   );
 }
