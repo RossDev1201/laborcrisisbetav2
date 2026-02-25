@@ -2,17 +2,17 @@
 import Image from "next/image";
 
 const sponsorLogos = [
-  { src: "/Agoda_logo.svg", alt: "Agoda" },
-  { src: "/Antler_logo.svg", alt: "Antler" },
-  { src: "/BandLab_Technologies_Logo.svg", alt: "BandLab Technologies" },
-  { src: "/BreadTalk_logo.svg", alt: "BreadTalk" },
-  { src: "/Camella_Homes_logo.svg", alt: "Camella Homes" },
-  { src: "/CapitaLand_Logo.svg", alt: "CapitaLand" },
-  { src: "/Grab_Logo.svg", alt: "Grab" },
-  { src: "/Horizon_Fuel_Cell_Technologies.svg", alt: "Horizon Fuel Cell Technologies" },
-  { src: "/Nestle_logo.svg", alt: "Nestlé" },
-  { src: "/Paymaya_logo.svg", alt: "PayMaya" },
-  { src: "/San_Miguel_Corporation_logo.svg", alt: "San Miguel Corporation" },
+  { src: "/sponsor-agoda.svg", alt: "Agoda" },
+  { src: "/sponsor-antler.svg", alt: "Antler" },
+  { src: "/sponsor-bandlab.svg", alt: "BandLab Technologies" },
+  { src: "/sponsor-breadtalk.svg", alt: "BreadTalk" },
+  { src: "/sponsor-camella.svg", alt: "Camella Homes" },
+  { src: "/sponsor-capital-land.svg", alt: "CapitaLand" },
+  { src: "/sponsor-grab.svg", alt: "Grab" },
+  { src: "/sponsor-horizon.svg", alt: "Horizon Fuel Cell Technologies" },
+  { src: "/sponsor-nestle.svg", alt: "Nestlé" },
+  { src: "/sponsor-paymaya.svg", alt: "PayMaya" },
+  { src: "/sponsor-san-miguel.svg", alt: "San Miguel Corporation" },
 ];
 
 // If your files are .png instead, just replace `.svg` with `.png` in all src values above.

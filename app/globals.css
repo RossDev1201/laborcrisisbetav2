@@ -230,24 +230,21 @@
   transform: scale(1.05);
 }
 
-/* Marquee base layout */
-.lc-marquee-row {
-  overflow: hidden;
-  position: relative;
-}
+/* --- Sponsors marquee --- */
 
-/* Fade edges a bit so logos don't abruptly cut off */
 .lc-marquee-row {
-  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  position: relative;
+  overflow: hidden;
+  /* make sure the row has some height */
+  padding-block: 0.5rem;
 }
 
 .lc-marquee-track {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 4rem;
-  white-space: nowrap;
-  /* Move left by default; bottom row overrides with reverse */
+  /* content wider than viewport so it can scroll */
+  width: max-content;
   animation: lc-marquee-left 30s linear infinite;
 }
 
@@ -256,12 +253,13 @@
 }
 
 .lc-marquee-item {
-  display: inline-flex;
+  flex: 0 0 auto;
+  display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Keyframes: left-moving row */
+/* left-moving row */
 @keyframes lc-marquee-left {
   0% {
     transform: translateX(0);
@@ -271,7 +269,7 @@
   }
 }
 
-/* Keyframes: right-moving row */
+/* right-moving row */
 @keyframes lc-marquee-right {
   0% {
     transform: translateX(-50%);
