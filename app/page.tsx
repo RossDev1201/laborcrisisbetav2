@@ -4,6 +4,7 @@ import  {FeaturedJobsSection} from "@/components/sections/featured-job-section"
 import { TestimonialsSection } from "@/components/sections/testimonial-section";
 import { UploadCvSection } from "@/components/sections/upload-cv-section";
 import  {CompanySponsorsSection} from "@/components/sections/company-sponsors-section"
+import { NewsletterSection } from "@/components/sections/newsletter-section";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <TestimonialsSection/>
       <UploadCvSection/>
       <CompanySponsorsSection/>
+      <NewsletterSection/>
     </main>
   );
 }
