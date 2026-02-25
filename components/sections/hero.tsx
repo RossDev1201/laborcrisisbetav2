@@ -29,7 +29,7 @@ export function HeroSection() {
       <div className="pointer-events-none absolute inset-0 -z-10">
         {/* Light mode */}
         <Image
-          src="/hero-light.webp"
+          src="/hero-light-02.webp"
           alt="City skyline background with professionals"
           fill
           priority
