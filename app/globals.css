@@ -205,6 +205,26 @@ html {
   color: #e5e7eb;
 }
 
+
+
+/* Non-featured cards: teal titles in light mode */
+.lc-category-grid .lc-category-card:not(:first-child) .lc-category-title {
+  color: #339989;
+}
+
+/* First (featured) card + hovered card: title text becomes white */
+.lc-category-grid .lc-category-card:first-child .lc-category-title,
+.lc-category-grid .lc-category-card:hover .lc-category-title {
+  color: #ffffff;
+}
+
+/* Dark mode: keep titles white on all cards */
+.dark .lc-category-grid .lc-category-card .lc-category-title {
+  color: #ffffff;
+}
+
+
+
 /* IMPORTANT: still no .lc-category-icon rules.
    Icons keep their SVG color in ALL states. */
 

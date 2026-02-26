@@ -112,8 +112,8 @@ export function WorkforceSolutionsSection() {
               className="
                 lc-category-card
                 flex w-full flex-col justify-center
-                rounded-[20px] px-5 py-20
-                min-h-[255px]
+                rounded-4xl px-5 py-20
+                min-h-63.75
                 bg-white text-gray-900
                 shadow-[0_10px_30px_rgba(15,23,42,0.12)]
                 transition-colors
@@ -125,16 +125,22 @@ export function WorkforceSolutionsSection() {
                   <Image
                     src={category.iconSrc}
                     alt={category.title}
-                    width={90}
-                    height={90}
-                    className="lc-category-icon h-[90px] w-[90px]"
+                    width={180}
+                    height={180}
+                    className="lc-category-icon h-45 w-45"
                   />
                 </div>
 
                 <div className="flex flex-col">
-                  <h3 className="text-[15px] font-semibold leading-snug md:text-[16px] lg:text-[17px]">
-                    {category.title}
-                  </h3>
+                  <h3
+  className="
+    lc-category-title
+    text-[15px] font-semibold leading-snug
+    md:text-[16px] lg:text-[17px]
+  "
+>
+  {category.title}
+</h3>
                   <p className="lc-category-meta mt-2 text-[11px] text-gray-500 md:text-[12px] dark:text-gray-200">
                     {category.jobsLabel}
                   </p>
@@ -165,8 +171,8 @@ export function WorkforceSolutionsSection() {
               </div>
 
               {/* Job Count Badge */}
-              <div className="absolute top-0 right-0 translate-x-[6px] -translate-y-[6px]">
-                <div className="bg-[#339989] rounded-full w-[27px] h-[27px] flex items-center justify-center">
+              <div className="absolute top-0 right-0 translate-x-1.5 -translate-y-1.5">
+                <div className="bg-[#339989] rounded-full w-6.75 h-6.75 flex items-center justify-center">
                   <p className="font-['Inter'] font-semibold text-[10px] leading-normal text-white">
                     {category.jobCount}
                   </p>
@@ -174,10 +180,10 @@ export function WorkforceSolutionsSection() {
               </div>
 
               {/* Title - outside the card */}
-              <div className="absolute top-[105px] flex flex-col items-center w-full">
-                <p className="lc-category-meta font-['Inter'] font-medium text-[10px] leading-normal text-[#3d3737] text-center capitalize whitespace-pre-line dark:text-white">
-                  {category.titleMobile}
-                </p>
+              <div className="absolute top-26.25 flex flex-col items-center w-full">
+                <p className="lc-category-title-mobile font-['Inter'] font-medium text-[10px] leading-normal text-[#3d3737] text-center capitalize whitespace-pre-line dark:text-white">
+  {category.titleMobile}
+</p>
               </div>
             </article>
           ))}
