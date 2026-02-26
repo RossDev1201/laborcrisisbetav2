@@ -78,7 +78,7 @@ export function HeroSection() {
             id="hero-heading"
             className="text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl"
           >
-            <span className="block text-[#E5E5E5]">
+            <span className="block dark:text-[#E5E7EB] text-gray-900">
               When Labor is Critical,
             </span>
             <span className="mt-2 block text-[#E61E25]">
