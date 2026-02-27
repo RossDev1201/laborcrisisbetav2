@@ -230,6 +230,10 @@ html {
 
    /* === Testimonials (Reviews) === */
 
+/* === Testimonials (Reviews) === */
+
+/* === Testimonials (Reviews) === */
+
 /* Hide all panels by default */
 .lc-testimonial-panels .lc-testimonial-panel {
   display: none;
@@ -239,8 +243,31 @@ html {
 .lc-testimonial-avatar-dot {
   border-radius: 9999px;
   border: 2px solid transparent;
-  padding: 3px; /* thickness of ring */
+  padding: 3px; /* ring thickness */
   transition: border-color 150ms ease-out, transform 150ms ease-out;
+  transform-origin: center;
+}
+
+/* Avatar image */
+.lc-testimonial-avatar-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  object-fit: cover;
+}
+
+/* Avatars container:
+   - single line
+   - no scrollbar
+   - centered like the mock
+*/
+.lc-testimonial-avatars {
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 1.25rem;
+  max-width: 360px; /* enough for 5 avatars on mobile */
+  width: 100%;
+  overflow: visible;
 }
 
 /* Show the panel that matches the checked radio */
@@ -252,16 +279,15 @@ html {
   display: block;
 }
 
-/* Highlight the active avatar with a red ring */
+/* Highlight the active avatar with a bigger red ring */
 #t1:checked ~ .lc-testimonial-avatars label[for="t1"] .lc-testimonial-avatar-dot,
 #t2:checked ~ .lc-testimonial-avatars label[for="t2"] .lc-testimonial-avatar-dot,
 #t3:checked ~ .lc-testimonial-avatars label[for="t3"] .lc-testimonial-avatar-dot,
 #t4:checked ~ .lc-testimonial-avatars label[for="t4"] .lc-testimonial-avatar-dot,
 #t5:checked ~ .lc-testimonial-avatars label[for="t5"] .lc-testimonial-avatar-dot {
   border-color: #E61E25;
-  transform: scale(1.05);
+  transform: scale(1.6); /* grows to the big state in the mock */
 }
-
 /* --- Sponsors marquee --- */
 
 .lc-marquee-row {

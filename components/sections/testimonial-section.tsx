@@ -2,7 +2,7 @@
 import Image from "next/image";
 
 type Testimonial = {
-  id: string; // t1, t2, ...
+  id: string;
   name: string;
   role: string;
   quoteBeforeBrand: string;
@@ -15,8 +15,7 @@ const testimonials: Testimonial[] = [
     id: "t1",
     name: "Carlos M.",
     role: "Warehouse Supervisor",
-    quoteBeforeBrand:
-      "As someone supporting my family, time matters.",
+    quoteBeforeBrand: "As someone supporting my family, time matters.",
     quoteAfterBrand:
       "connected me to an employer who needed staff immediately. I appreciate how fast everything moved.",
     avatarSrc: "/testimonial-01.webp",
@@ -25,8 +24,7 @@ const testimonials: Testimonial[] = [
     id: "t2",
     name: "Aisha R.",
     role: "Customer Support Specialist",
-    quoteBeforeBrand:
-      "I was looking for a stable role with growth. ",
+    quoteBeforeBrand: "I was looking for a stable role with growth.",
     quoteAfterBrand:
       "matched me with a company that values training and development.",
     avatarSrc: "/testimonial-02.webp",
@@ -35,8 +33,7 @@ const testimonials: Testimonial[] = [
     id: "t3",
     name: "Kenji S.",
     role: "Project Engineer",
-    quoteBeforeBrand:
-      "After months of searching on my own,",
+    quoteBeforeBrand: "After months of searching on my own,",
     quoteAfterBrand:
       "introduced me to the right hiring manager in just a few days.",
     avatarSrc: "/testimonial-03.webp",
@@ -45,8 +42,7 @@ const testimonials: Testimonial[] = [
     id: "t4",
     name: "Maya L.",
     role: "Preschool Teacher",
-    quoteBeforeBrand:
-      "I wanted a job that fit my schedule and my values.",
+    quoteBeforeBrand: "I wanted a job that fit my schedule and my values.",
     quoteAfterBrand:
       "helped me find a school where I feel truly supported.",
     avatarSrc: "/testimonial-04.webp",
@@ -55,8 +51,7 @@ const testimonials: Testimonial[] = [
     id: "t5",
     name: "Victor T.",
     role: "Events Manager",
-    quoteBeforeBrand:
-      "Events hiring can be unpredictable, but",
+    quoteBeforeBrand: "Events hiring can be unpredictable, but",
     quoteAfterBrand:
       "kept me updated with new roles and made every application feel easy.",
     avatarSrc: "/testimonial-05.webp",
@@ -75,12 +70,16 @@ export function TestimonialsSection() {
         <div className="text-center">
           <h2
             id="reviews-heading"
-            className="text-[24px] font-semibold leading-tight text-gray-900 md:text-[28px] lg:text-[32px] dark:text-white"
+            className="text-[26px] font-semibold leading-tight text-gray-900 md:text-[32px] dark:text-white"
           >
-            <span className="text-[#E61E25]">Reviews</span>{" "}
-            <span>of People Who Found</span>
+            <span>
+              <span className="text-[#E61E25]">Reviews</span>{" "}
+              <span>of People</span>
+            </span>
             <br />
-            <span>Have Jobs Through Labor Crisis</span>
+            <span>Who Have Found</span>
+            <br />
+            <span>Jobs Through Labor Crisis</span>
           </h2>
         </div>
 
@@ -99,23 +98,25 @@ export function TestimonialsSection() {
           ))}
 
           {/* Quote panels */}
-          <div className="lc-testimonial-panels relative w-full">
+          <div className="lc-testimonial-panels relative mt-6 w-full">
             {testimonials.map((t) => (
               <figure
                 key={t.id}
-                className="lc-testimonial-panel mx-auto max-w-3xl rounded-[24px] bg-[#f5f5f5] px-8 py-10 text-center text-gray-800 shadow-sm dark:bg-[#202020] dark:text-gray-100"
+                className="lc-testimonial-panel mx-auto max-w-3xl rounded-[24px] bg-white px-8 py-10 text-center text-[#111111] shadow-sm"
                 data-testimonial={t.id}
               >
                 <blockquote className="text-[15px] leading-relaxed md:text-[17px]">
                   <p className="italic">
                     “{t.quoteBeforeBrand}{" "}
-                    <span className="text-[#E61E25] font-semibold">
+                    <span className="font-semibold text-[#E61E25]">
                       Labor Crisis
                     </span>{" "}
                     {t.quoteAfterBrand}”
                   </p>
                 </blockquote>
-                <figcaption className="mt-4 text-sm font-medium text-gray-700 dark:text-gray-200">
+
+                {/* keep figcaption but hide on mobile to match mock */}
+                <figcaption className="mt-4 hidden text-sm font-medium text-gray-700 md:block dark:text-gray-200">
                   {t.name}{" "}
                   <span className="text-gray-500 dark:text-gray-400">
                     · {t.role}
@@ -125,8 +126,8 @@ export function TestimonialsSection() {
             ))}
           </div>
 
-          {/* Avatars */}
-          <div className="lc-testimonial-avatars mt-10 flex flex-wrap items-center justify-center gap-6">
+          {/* Avatars: single line, selected one expands */}
+          <div className="lc-testimonial-avatars mt-10 flex items-center">
             {testimonials.map((t) => (
               <label
                 key={t.id}
@@ -138,9 +139,9 @@ export function TestimonialsSection() {
                   <Image
                     src={t.avatarSrc}
                     alt={t.name}
-                    width={72}
-                    height={72}
-                    className="h-16 w-16 rounded-full object-cover"
+                    width={48}
+                    height={48}
+                    className="lc-testimonial-avatar-img"
                   />
                 </div>
               </label>
