@@ -65,11 +65,11 @@ export function HeroSection() {
       <div
         className="
           relative z-10
-          mx-auto flex max-w-[402px] flex-col items-center
-          px-5 pt-10 pb-[260px]
-          min-h-[850px]
+          mx-auto flex max-w-100.5 flex-col items-center
+          px-5 pt-10 pb-65
+          min-h-212.5
           md:max-w-7xl md:px-6
-          lg:px-8 lg:pt-24 lg:pb-[260px]
+          lg:px-8 lg:pt-24 lg:pb-65
         "
       >
         {/* Headline */}
@@ -88,17 +88,17 @@ export function HeroSection() {
         </div>
 
         {/* Search card */}
-        <div className="mt-[50px] flex w-full justify-center">
+        <div className="mt-12.5 flex w-full justify-center">
           <form
             action="/jobs"
             method="GET"
             className="
-              w-full max-w-[572px]
+              w-full max-w-143
               rounded-[40px]
               bg-[#E5E5E5] px-5 pt-6 pb-8
               dark:bg-[#111111]
               flex flex-col gap-4
-              lg:h-[385px] lg:justify-center
+              lg:h-96.25 lg:justify-center
             "
           >
             {/* Job input */}

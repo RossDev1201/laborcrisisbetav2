@@ -132,7 +132,7 @@ export function ServiceProviderSignupForm({ action }: Props) {
           <Button
             type="button"
             variant="outline"
-            className="min-w-[120px] border-[#339989] text-[#339989] hover:bg-[#339989]/5"
+            className="min-w-30 border-[#339989] text-[#339989] hover:bg-[#339989]/5"
           >
             Cancel
           </Button>
@@ -140,7 +140,7 @@ export function ServiceProviderSignupForm({ action }: Props) {
 
         <Button
           type="submit"
-          className="min-w-[120px] bg-[#EF4F4F] hover:bg-[#e03f3f]"
+          className="min-w-30 bg-[#EF4F4F] hover:bg-[#e03f3f]"
           disabled={!!matchError}
         >
           Sign Up

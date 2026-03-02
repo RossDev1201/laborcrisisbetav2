@@ -13,13 +13,12 @@ import {
 import { User2, Building2 } from "lucide-react";
 
 interface SignupRoleDialogProps {
-  children: React.ReactNode; // trigger (e.g. "Sign Up" button)
+  children: React.ReactNode; // trigger (your "Sign Up" button)
 }
 
 export function SignupRoleDialog({ children }: SignupRoleDialogProps) {
   return (
     <Dialog>
-      {/* Trigger from parent (Sign Up button / link) */}
       <DialogTrigger asChild>{children}</DialogTrigger>
 
       <DialogContent
@@ -46,7 +45,7 @@ export function SignupRoleDialog({ children }: SignupRoleDialogProps) {
         <div className="mt-8 space-y-5">
           {/* Service Provider / Jobseeker */}
           <Link
-            href="/signup/service-provider" // TODO: adjust route if needed
+            href="/signup/service-provider"
             className="
               flex items-center gap-6
               rounded-[24px]
@@ -76,7 +75,7 @@ export function SignupRoleDialog({ children }: SignupRoleDialogProps) {
 
           {/* Client / Company */}
           <Link
-            href="/signup/client" // TODO: adjust route if needed
+            href="/signup/client"
             className="
               flex items-center gap-6
               rounded-[24px]
