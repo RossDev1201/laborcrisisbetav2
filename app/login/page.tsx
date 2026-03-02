@@ -113,16 +113,16 @@ export default function LoginPage() {
 
         {/* Sign up text */}
         <p className="mt-10 text-center text-lg text-black dark:text-white">
-  Don&apos;t have an account yet?{" "}
-  <SignupRoleDialog>
-    <button
-      type="button"
-      className="font-semibold text-[#339989] hover:underline"
-    >
-      Sign Up
-    </button>
-  </SignupRoleDialog>
-</p>
+          Don&apos;t have an account yet?{" "}
+          <SignupRoleDialog>
+            <button
+              type="button"
+              className="font-semibold text-[#339989] hover:underline"
+            >
+              Sign Up
+            </button>
+          </SignupRoleDialog>
+        </p>
       </section>
     </main>
   );

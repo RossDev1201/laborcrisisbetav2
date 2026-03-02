@@ -1,0 +1,150 @@
+// components/auth/client-signup-form.tsx
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+
+interface Props {
+  action: (formData: FormData) => void | Promise<void>;
+}
+
+export function ClientSignupForm({ action }: Props) {
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [matchError, setMatchError] = useState<string | null>(null);
+
+  function handlePasswordChange(value: string) {
+    setPassword(value);
+    if (confirm && value === confirm) {
+      setMatchError(null);
+    }
+  }
+
+  function handleConfirmChange(value: string) {
+    setConfirm(value);
+    if (password && value === password) {
+      setMatchError(null);
+    }
+  }
+
+  function handleConfirmBlur() {
+    if (password && confirm && password !== confirm) {
+      setMatchError("Passwords do not match.");
+    }
+  }
+
+  return (
+    <form className="mt-8 space-y-4" action={action}>
+      {/* Company name */}
+      <div className="space-y-1">
+        <Label
+          htmlFor="name"
+          className="text-xs font-medium text-zinc-800 dark:text-zinc-200"
+        >
+          Client / Company Name
+        </Label>
+        <Input
+          id="name"
+          name="name"
+          type="text"
+          placeholder="Enter company name"
+          autoComplete="organization"
+          required
+          className="h-10 bg-[#F9FAFB] dark:bg-zinc-900"
+        />
+      </div>
+
+      {/* Email */}
+      <div className="space-y-1">
+        <Label
+          htmlFor="email"
+          className="text-xs font-medium text-zinc-800 dark:text-zinc-200"
+        >
+          Work Email
+        </Label>
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          placeholder="Enter work email"
+          autoComplete="email"
+          required
+          className="h-10 bg-[#F9FAFB] dark:bg-zinc-900"
+        />
+      </div>
+
+      {/* Password */}
+      <div className="space-y-1">
+        <Label
+          htmlFor="password"
+          className="text-xs font-medium text-zinc-800 dark:text-zinc-200"
+        >
+          Password
+        </Label>
+        <Input
+          id="password"
+          name="password"
+          type="password"
+          placeholder="****************"
+          autoComplete="new-password"
+          required
+          minLength={8}
+          className="h-10 bg-[#F9FAFB] dark:bg-zinc-900"
+          value={password}
+          onChange={(e) => handlePasswordChange(e.target.value)}
+        />
+      </div>
+
+      {/* Confirm password */}
+      <div className="space-y-1">
+        <Label
+          htmlFor="confirmPassword"
+          className="text-xs font-medium text-zinc-800 dark:text-zinc-200"
+        >
+          Re-Type Password
+        </Label>
+        <Input
+          id="confirmPassword"
+          name="confirmPassword"
+          type="password"
+          placeholder="****************"
+          autoComplete="new-password"
+          required
+          minLength={8}
+          className="h-10 bg-[#F9FAFB] dark:bg-zinc-900"
+          value={confirm}
+          onChange={(e) => handleConfirmChange(e.target.value)}
+          onBlur={handleConfirmBlur}
+        />
+        {matchError && (
+          <p className="pt-1 text-xs text-red-500">{matchError}</p>
+        )}
+      </div>
+
+      {/* Buttons */}
+      <div className="mt-6 flex items-center justify-center gap-4">
+        <Link href="/login">
+          <Button
+            type="button"
+            variant="outline"
+            className="min-w-[120px] border-[#339989] text-[#339989] hover:bg-[#339989]/5"
+          >
+            Cancel
+          </Button>
+        </Link>
+
+        <Button
+          type="submit"
+          className="min-w-[120px] bg-[#EF4F4F] hover:bg-[#e03f3f]"
+          disabled={!!matchError}
+        >
+          Sign Up
+        </Button>
+      </div>
+    </form>
+  );
+}
