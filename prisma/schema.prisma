@@ -1,14 +1,97 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client"
-  output   = "../lib/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "postgresql" // change if needed
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  service_provider
+  client
+}
+
+model User {
+  id                 String   @id @default(cuid())
+  name               String?
+  email              String?  @unique
+  emailVerified      DateTime?
+  image              String?
+
+  role               UserRole?
+  onboardingComplete Boolean  @default(false)
+
+  // Optional if you later add email/password:
+  passwordHash       String?
+
+  serviceProviderProfile ServiceProviderProfile?
+  clientProfile          ClientProfile?
+
+  accounts           Account[]
+  sessions           Session[]
+}
+
+model ServiceProviderProfile {
+  id        String @id @default(cuid())
+  userId    String @unique
+  fullName  String
+  shortBio  String
+  resumeUrl String? // store file url later
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ClientProfile {
+  id              String @id @default(cuid())
+  userId          String @unique
+  companyName     String
+  companyLocation String?
+  companyAddress  String?
+  website         String?
+  facebook        String?
+  instagram       String?
+  youtube         String?
+  linkedin        String?
+  logoUrl         String? // store file url later
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+/**
+ * Auth.js models
+ */
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
