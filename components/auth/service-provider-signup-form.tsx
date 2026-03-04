@@ -1,7 +1,4 @@
 // components/auth/service-provider-signup-form.tsx
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
 
 import { Input } from "@/components/ui/input";
@@ -12,32 +9,8 @@ interface Props {
   action: (formData: FormData) => void | Promise<void>;
 }
 
+// Server component: NO "use client", NO hooks.
 export function ServiceProviderSignupForm({ action }: Props) {
-  const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
-  const [matchError, setMatchError] = useState<string | null>(null);
-
-  function handlePasswordChange(value: string) {
-    setPassword(value);
-    // clear error live if they now match
-    if (confirm && value === confirm) {
-      setMatchError(null);
-    }
-  }
-
-  function handleConfirmChange(value: string) {
-    setConfirm(value);
-    if (password && value === password) {
-      setMatchError(null);
-    }
-  }
-
-  function handleConfirmBlur() {
-    if (password && confirm && password !== confirm) {
-      setMatchError("Passwords do not match.");
-    }
-  }
-
   return (
     <form className="mt-8 space-y-4" action={action}>
       {/* Name */}
@@ -95,8 +68,6 @@ export function ServiceProviderSignupForm({ action }: Props) {
           required
           minLength={8}
           className="h-10 bg-[#F9FAFB] dark:bg-zinc-900"
-          value={password}
-          onChange={(e) => handlePasswordChange(e.target.value)}
         />
       </div>
 
@@ -117,13 +88,7 @@ export function ServiceProviderSignupForm({ action }: Props) {
           required
           minLength={8}
           className="h-10 bg-[#F9FAFB] dark:bg-zinc-900"
-          value={confirm}
-          onChange={(e) => handleConfirmChange(e.target.value)}
-          onBlur={handleConfirmBlur}
         />
-        {matchError && (
-          <p className="pt-1 text-xs text-red-500">{matchError}</p>
-        )}
       </div>
 
       {/* Buttons */}
@@ -141,7 +106,6 @@ export function ServiceProviderSignupForm({ action }: Props) {
         <Button
           type="submit"
           className="min-w-30 bg-[#EF4F4F] hover:bg-[#e03f3f]"
-          disabled={!!matchError}
         >
           Sign Up
         </Button>
@@ -149,3 +113,5 @@ export function ServiceProviderSignupForm({ action }: Props) {
     </form>
   );
 }
+
+export default ServiceProviderSignupForm;

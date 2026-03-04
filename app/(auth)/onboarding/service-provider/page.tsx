@@ -1,3 +1,4 @@
+// app/(auth)/onboarding/service-provider/page.tsx
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
@@ -49,7 +50,8 @@ async function saveServiceProvider(formData: FormData) {
 export default async function ServiceProviderOnboardingPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string; mode?: string }>;
+  // ✅ Next 15: searchParams is a Promise of a generic record
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const session = await auth();
   if (!session?.user?.email) redirect("/login");
@@ -64,8 +66,13 @@ export default async function ServiceProviderOnboardingPage({
 
   if (!user) redirect("/login");
 
-  // Next 15: searchParams is async
-  const { error, mode } = await searchParams;
+  // ✅ Await the promise and safely pull "error" if present
+  const sp = await searchParams;
+  const error =
+    typeof sp.error === "string" ? sp.error : Array.isArray(sp.error) ? sp.error[0] : undefined;
+  // "mode" is optional – if you ever need it, same pattern:
+  const mode =
+    typeof sp.mode === "string" ? sp.mode : Array.isArray(sp.mode) ? sp.mode[0] : undefined;
 
   const initialFullName = user.serviceProviderProfile?.fullName ?? "";
   const initialShortBio = user.serviceProviderProfile?.shortBio ?? "";
@@ -173,16 +180,16 @@ export default async function ServiceProviderOnboardingPage({
                 Cancel
               </Link>
 
-              <button
-                type="submit"
-                className="min-w-[160px] rounded-xl bg-[#EF4F4F] px-8 py-3 text-sm font-medium text-white hover:bg-[#e03f3f] transition"
-              >
-                Save
-              </button>
-            </div>
-          </form>
-        </section>
-      </main>
-    </>
+            <button
+              type="submit"
+              className="min-w-[160px] rounded-xl bg-[#EF4F4F] px-8 py-3 text-sm font-medium text-white hover:bg-[#e03f3f] transition"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </>
   );
 }

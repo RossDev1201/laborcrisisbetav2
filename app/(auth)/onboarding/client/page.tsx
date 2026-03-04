@@ -1,3 +1,4 @@
+// app/(auth)/onboarding/client/page.tsx
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
@@ -76,7 +77,8 @@ async function saveClient(formData: FormData) {
 export default async function ClientOnboardingPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string; mode?: string }>;
+  // ✅ Next 15 async searchParams
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const session = await auth();
   if (!session?.user?.email) redirect("/login");
@@ -102,7 +104,11 @@ export default async function ClientOnboardingPage({
 
   if (!user) redirect("/login");
 
-  const { error, mode } = await searchParams;
+  const sp = await searchParams;
+  const error =
+    typeof sp.error === "string" ? sp.error : Array.isArray(sp.error) ? sp.error[0] : undefined;
+  const mode =
+    typeof sp.mode === "string" ? sp.mode : Array.isArray(sp.mode) ? sp.mode[0] : undefined;
 
   const initial = user.clientProfile;
 
@@ -141,106 +147,106 @@ export default async function ClientOnboardingPage({
           {/* Two-column grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6">
             <div>
-              <label className="block text-sm font-medium text-[#111827] dark:text-white">
+              <label className="block text-sm font-medium text-[#111827] dark:text:white">
                 Client/Company Name
               </label>
               <input
                 name="companyName"
                 defaultValue={initialCompanyName}
                 placeholder="Enter Client/Company name"
-                className="mt-2 w-full rounded-xl border border-[#E4E4E7] dark:border-[#3F3F46] bg-white dark:bg-[#09090B] px-4 py-3 text-sm text-[#111827] dark:text-white outline-none focus:ring-2 focus:ring-[#EF4F4F]/30"
+                className="mt-2 w-full rounded-xl border border-[#E4E4E7] dark:border-[#3F3F46] bg:white dark:bg-[#09090B] px-4 py-3 text-sm text-[#111827] dark:text:white outline-none focus:ring-2 focus:ring-[#EF4F4F]/30"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-[#111827] dark:text-white">
+              <label className="block text-sm font-medium text-[#111827] dark:text:white">
                 Company Location
               </label>
               <input
                 name="companyLocation"
                 defaultValue={initialCompanyLocation}
                 placeholder="Select location"
-                className="mt-2 w-full rounded-xl border border-[#E4E4E7] dark:border-[#3F3F46] bg-white dark:bg-[#09090B] px-4 py-3 text-sm text-[#111827] dark:text-white outline-none focus:ring-2 focus:ring-[#EF4F4F]/30"
+                className="mt-2 w-full rounded-xl border border-[#E4E4E7] dark:border-[#3F3F46] bg:white dark:bg-[#09090B] px-4 py-3 text-sm text-[#111827] dark:text:white outline-none focus:ring-2 focus:ring-[#EF4F4F]/30"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-[#111827] dark:text-white">
+              <label className="block text-sm font-medium text-[#111827] dark:text:white">
                 Website
               </label>
               <input
                 name="website"
                 defaultValue={initialWebsite}
                 placeholder="https://yourcompany.com"
-                className="mt-2 w-full rounded-xl border border-[#E4E4E7] dark:border-[#3F3F46] bg-white dark:bg-[#09090B] px-4 py-3 text-sm text-[#111827] dark:text-white outline-none focus:ring-2 focus:ring-[#EF4F4F]/30"
+                className="mt-2 w-full rounded-xl border border-[#E4E4E7] dark:border-[#3F3F46] bg:white dark:bg-[#09090B] px-4 py-3 text-sm text-[#111827] dark:text:white outline-none focus:ring-2 focus:ring-[#EF4F4F]/30"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-[#111827] dark:text-white">
+              <label className="block text-sm font-medium text-[#111827] dark:text:white">
                 Company Address
               </label>
               <input
                 name="companyAddress"
                 defaultValue={initialCompanyAddress}
                 placeholder="Enter address (unit, bldg., street...)"
-                className="mt-2 w-full rounded-xl border border-[#E4E4E7] dark:border-[#3F3F46] bg-white dark:bg-[#09090B] px-4 py-3 text-sm text-[#111827] dark:text-white outline-none focus:ring-2 focus:ring-[#EF4F4F]/30"
+                className="mt-2 w-full rounded-xl border border-[#E4E4E7] dark:border-[#3F3F46] bg:white dark:bg-[#09090B] px-4 py-3 text-sm text-[#111827] dark:text:white outline-none focus:ring-2 focus:ring-[#EF4F4F]/30"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-[#111827] dark:text-white">
+              <label className="block text-sm font-medium text-[#111827] dark:text:white">
                 Facebook
               </label>
               <input
                 name="facebook"
                 defaultValue={initialFacebook}
                 placeholder="https://www.facebook.com/yourcompany"
-                className="mt-2 w-full rounded-xl border border-[#E4E4E7] dark:border-[#3F3F46] bg-white dark:bg-[#09090B] px-4 py-3 text-sm text-[#111827] dark:text-white outline-none focus:ring-2 focus:ring-[#EF4F4F]/30"
+                className="mt-2 w-full rounded-xl border border-[#E4E4E7] dark:border-[#3F3F46] bg:white dark:bg-[#09090B] px-4 py-3 text-sm text-[#111827] dark:text:white outline-none focus:ring-2 focus:ring-[#EF4F4F]/30"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-[#111827] dark:text-white">
+              <label className="block text-sm font-medium text-[#111827] dark:text:white">
                 YouTube
               </label>
               <input
                 name="youtube"
                 defaultValue={initialYoutube}
                 placeholder="https://www.youtube.com/@yourcompany"
-                className="mt-2 w-full rounded-xl border border-[#E4E4E7] dark:border-[#3F3F46] bg-white dark:bg-[#09090B] px-4 py-3 text-sm text-[#111827] dark:text-white outline-none focus:ring-2 focus:ring-[#EF4F4F]/30"
+                className="mt-2 w-full rounded-xl border border-[#E4E4E7] dark:border-[#3F3F46] bg:white dark:bg-[#09090B] px-4 py-3 text-sm text-[#111827] dark:text:white outline-none focus:ring-2 focus:ring-[#EF4F4F]/30"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-[#111827] dark:text-white">
+              <label className="block text-sm font-medium text-[#111827] dark:text:white">
                 Instagram
               </label>
               <input
                 name="instagram"
                 defaultValue={initialInstagram}
                 placeholder="https://www.instagram.com/yourcompany"
-                className="mt-2 w-full rounded-xl border border-[#E4E4E7] dark:border-[#3F3F46] bg-white dark:bg-[#09090B] px-4 py-3 text-sm text-[#111827] dark:text-white outline-none focus:ring-2 focus:ring-[#EF4F4F]/30"
+                className="mt-2 w-full rounded-xl border border-[#E4E4E7] dark:border-[#3F3F46] bg:white dark:bg-[#09090B] px-4 py-3 text-sm text-[#111827] dark:text:white outline-none focus:ring-2 focus:ring-[#EF4F4F]/30"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-[#111827] dark:text-white">
+              <label className="block text-sm font-medium text-[#111827] dark:text:white">
                 LinkedIn
               </label>
               <input
                 name="linkedin"
                 defaultValue={initialLinkedin}
                 placeholder="www.linkedin.com/company/yourcompany"
-                className="mt-2 w-full rounded-xl border border-[#E4E4E7] dark:border-[#3F3F46] bg-white dark:bg-[#09090B] px-4 py-3 text-sm text-[#111827] dark:text-white outline-none focus:ring-2 focus:ring-[#EF4F4F]/30"
+                className="mt-2 w-full rounded-xl border border-[#E4E4E7] dark:border-[#3F3F46] bg:white dark:bg-[#09090B] px-4 py-3 text-sm text-[#111827] dark:text:white outline-none focus:ring-2 focus:ring-[#EF4F4F]/30"
               />
             </div>
           </div>
 
           {/* Logo upload */}
           <div className="mt-10">
-            <label className="block text-sm font-medium text-[#111827] dark:text-white">
+            <label className="block text-sm font-medium text-[#111827] dark:text:white">
               Company Logo
             </label>
             <div className="mt-2 rounded-xl border border-[#E4E4E7] dark:border-[#3F3F46] bg-[#F9FAFB] dark:bg-[#09090B] p-8 text-center">
@@ -256,7 +262,7 @@ export default async function ClientOnboardingPage({
                 Image (2MB)
               </div>
 
-              <label className="mt-6 inline-flex cursor-pointer items-center justify-center rounded-xl bg-[#EF4F4F] px-8 py-3 text-sm font-medium text-white hover:bg-[#e03f3f] transition">
+              <label className="mt-6 inline-flex cursor-pointer items-center justify-center rounded-xl bg-[#EF4F4F] px-8 py-3 text-sm font-medium text:white hover:bg-[#e03f3f] transition">
                 Choose File
                 <input
                   name="logo"

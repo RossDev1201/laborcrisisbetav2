@@ -1,55 +1,42 @@
+// app/(auth)/signup/client/page.tsx
 import { redirect } from "next/navigation";
 import { ClientSignupForm } from "@/components/auth/client-signup-form";
 
-async function handleClientSignup(formData: FormData) {
-  "use server";
+export default function ClientSignupPage() {
+  // Server action for the signup form
+  async function signupAction(formData: FormData) {
+    "use server";
 
-  const name = String(formData.get("name") || "").trim();
-  const email = String(formData.get("email") || "").trim();
-  const password = String(formData.get("password") || "");
-  const confirmPassword = String(formData.get("confirmPassword") || "");
+    const name = String(formData.get("name") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+    const password = String(formData.get("password") || "");
 
-  if (!name || !email || !password || !confirmPassword) {
-    redirect("/signup/client?error=missing_fields");
+    // TODO: real signup logic (Prisma + password hashing, etc.)
+    // For now, just pretend success and send them to login.
+    if (!name || !email || !password) {
+      // if you want to handle errors later, you can redirect with a query:
+      // redirect("/signup/client?error=missing");
+    }
+
+    redirect("/login");
   }
-  if (password !== confirmPassword) {
-    redirect("/signup/client?error=password_mismatch");
-  }
-  if (password.length < 8) {
-    redirect("/signup/client?error=password_too_short");
-  }
-
-  // TODO: create user + send verification email
-  redirect("/signup/verify-email");
-}
-
-export default function ClientSignupPage({
-  searchParams,
-}: {
-  searchParams?: { error?: string };
-}) {
-  const errorCode = searchParams?.error;
-  let errorMessage: string | null = null;
-
-  if (errorCode === "missing_fields") errorMessage = "Please fill in all the fields.";
-  else if (errorCode === "password_mismatch") errorMessage = "Passwords do not match.";
-  else if (errorCode === "password_too_short") errorMessage = "Password must be at least 8 characters.";
 
   return (
-    <main className="relative left-1/2 -translate-x-1/2 w-screen bg-[#FFFAFB] dark:bg-[#020617] py-24">
-      <div className="mx-auto flex justify-center px-4">
-        <section className="w-full max-w-md rounded-3xl border border-[#D4D4D8] bg-white dark:bg-[#020617] px-8 py-8 shadow-sm">
-          <h1 className="text-xl md:text-2xl font-semibold text-center text-black dark:text-white">
-            Create your Client Account
+    <main className="min-h-screen flex items-center justify-center bg-[#FFFAFB] dark:bg-[#020617] px-4 py-16">
+      <section className="w-full max-w-md rounded-[30px] border border-[#E4E4E7] dark:border-[#3F3F46] bg-white dark:bg-[#18181B] px-8 py-10 shadow-sm">
+        {/* Heading */}
+        <div className="text-center space-y-2 mb-6">
+          <h1 className="text-2xl md:text-3xl font-semibold text-[#111827] dark:text-white">
+            Client / Company Sign Up
           </h1>
+          <p className="text-sm text-[#6B7280] dark:text-[#A1A1AA]">
+            Create an account to post jobs and hire service providers.
+          </p>
+        </div>
 
-          {errorMessage && (
-            <p className="mt-4 text-center text-sm text-red-500">{errorMessage}</p>
-          )}
-
-          <ClientSignupForm action={handleClientSignup} />
-        </section>
-      </div>
+        {/* Form with server action */}
+        <ClientSignupForm action={signupAction} />
+      </section>
     </main>
   );
 }

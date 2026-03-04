@@ -1,7 +1,4 @@
 // components/auth/client-signup-form.tsx
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
 
 import { Input } from "@/components/ui/input";
@@ -12,31 +9,9 @@ interface Props {
   action: (formData: FormData) => void | Promise<void>;
 }
 
+// Server component: NO "use client", NO hooks.
+// Safe to accept a server action and use it directly on the form.
 export function ClientSignupForm({ action }: Props) {
-  const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
-  const [matchError, setMatchError] = useState<string | null>(null);
-
-  function handlePasswordChange(value: string) {
-    setPassword(value);
-    if (confirm && value === confirm) {
-      setMatchError(null);
-    }
-  }
-
-  function handleConfirmChange(value: string) {
-    setConfirm(value);
-    if (password && value === password) {
-      setMatchError(null);
-    }
-  }
-
-  function handleConfirmBlur() {
-    if (password && confirm && password !== confirm) {
-      setMatchError("Passwords do not match.");
-    }
-  }
-
   return (
     <form className="mt-8 space-y-4" action={action}>
       {/* Company name */}
@@ -94,8 +69,6 @@ export function ClientSignupForm({ action }: Props) {
           required
           minLength={8}
           className="h-10 bg-[#F9FAFB] dark:bg-zinc-900"
-          value={password}
-          onChange={(e) => handlePasswordChange(e.target.value)}
         />
       </div>
 
@@ -116,13 +89,8 @@ export function ClientSignupForm({ action }: Props) {
           required
           minLength={8}
           className="h-10 bg-[#F9FAFB] dark:bg-zinc-900"
-          value={confirm}
-          onChange={(e) => handleConfirmChange(e.target.value)}
-          onBlur={handleConfirmBlur}
         />
-        {matchError && (
-          <p className="pt-1 text-xs text-red-500">{matchError}</p>
-        )}
+        {/* You can add server-side error messages here later */}
       </div>
 
       {/* Buttons */}
@@ -140,7 +108,6 @@ export function ClientSignupForm({ action }: Props) {
         <Button
           type="submit"
           className="min-w-[120px] bg-[#EF4F4F] hover:bg-[#e03f3f]"
-          disabled={!!matchError}
         >
           Sign Up
         </Button>
@@ -148,3 +115,5 @@ export function ClientSignupForm({ action }: Props) {
     </form>
   );
 }
+
+export default ClientSignupForm;

@@ -1,55 +1,41 @@
+// app/(auth)/signup/service-provider/page.tsx
 import { redirect } from "next/navigation";
 import { ServiceProviderSignupForm } from "@/components/auth/service-provider-signup-form";
 
-async function handleSignup(formData: FormData) {
-  "use server";
+export default function ServiceProviderSignupPage() {
+  // Server action for the signup form
+  async function signupAction(formData: FormData) {
+    "use server";
 
-  const name = String(formData.get("name") || "").trim();
-  const email = String(formData.get("email") || "").trim();
-  const password = String(formData.get("password") || "");
-  const confirmPassword = String(formData.get("confirmPassword") || "");
+    const name = String(formData.get("name") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+    const password = String(formData.get("password") || "");
 
-  if (!name || !email || !password || !confirmPassword) {
-    redirect("/signup/service-provider?error=missing_fields");
+    // TODO: real signup logic (Prisma + password hashing, etc.)
+    if (!name || !email || !password) {
+      // Later you can redirect with error query if you want:
+      // redirect("/signup/service-provider?error=missing");
+    }
+
+    redirect("/login");
   }
-  if (password !== confirmPassword) {
-    redirect("/signup/service-provider?error=password_mismatch");
-  }
-  if (password.length < 8) {
-    redirect("/signup/service-provider?error=password_too_short");
-  }
-
-  // TODO: create user + send verification email
-  redirect("/signup/verify-email");
-}
-
-export default function ServiceProviderSignupPage({
-  searchParams,
-}: {
-  searchParams?: { error?: string };
-}) {
-  const errorCode = searchParams?.error;
-  let errorMessage: string | null = null;
-
-  if (errorCode === "missing_fields") errorMessage = "Please fill in all the fields.";
-  else if (errorCode === "password_mismatch") errorMessage = "Passwords do not match.";
-  else if (errorCode === "password_too_short") errorMessage = "Password must be at least 8 characters.";
 
   return (
-    <main className="relative left-1/2 -translate-x-1/2 w-screen bg-[#FFFAFB] dark:bg-[#020617] py-24">
-      <div className="mx-auto flex justify-center px-4">
-        <section className="w-full max-w-md rounded-3xl border border-[#D4D4D8] bg-white dark:bg-[#020617] px-8 py-8 shadow-sm">
-          <h1 className="text-xl md:text-2xl font-semibold text-center text-black dark:text-white">
-            Create your Account
+    <main className="min-h-screen flex items-center justify-center bg-[#FFFAFB] dark:bg-[#020617] px-4 py-16">
+      <section className="w-full max-w-md rounded-[30px] border border-[#E4E4E7] dark:border-[#3F3F46] bg-white dark:bg-[#18181B] px-8 py-10 shadow-sm">
+        {/* Heading */}
+        <div className="text-center space-y-2 mb-6">
+          <h1 className="text-2xl md:text-3xl font-semibold text-[#111827] dark:text-white">
+            Service Provider Sign Up
           </h1>
+          <p className="text-sm text-[#6B7280] dark:text-[#A1A1AA]">
+            Create an account to find jobs and connect with clients.
+          </p>
+        </div>
 
-          {errorMessage && (
-            <p className="mt-4 text-center text-sm text-red-500">{errorMessage}</p>
-          )}
-
-          <ServiceProviderSignupForm action={handleSignup} />
-        </section>
-      </div>
+        {/* Form with server action */}
+        <ServiceProviderSignupForm action={signupAction} />
+      </section>
     </main>
   );
 }
