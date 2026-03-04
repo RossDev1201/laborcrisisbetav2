@@ -1,18 +1,24 @@
-import { defineConfig, globalIgnores } from "eslint/config";
+// eslint.config.mjs
+
+// Use Next's shareable configs directly — no `eslint/config` import needed
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 
-const eslintConfig = defineConfig([
+export default [
+  // Next.js recommended + Core Web Vitals rules
   ...nextVitals,
-  ...nextTs,
-  // Override default ignores of eslint-config-next.
-  globalIgnores([
-    // Default ignores of eslint-config-next:
-    ".next/**",
-    "out/**",
-    "build/**",
-    "next-env.d.ts",
-  ]),
-]);
 
-export default eslintConfig;
+  // TypeScript rules from eslint-config-next
+  ...nextTs,
+
+  // Global ignores (equivalent to `globalIgnores` helper)
+  {
+    ignores: [
+      ".next/**",
+      "out/**",
+      "build/**",
+      "next-env.d.ts",
+      "node_modules/**",
+    ],
+  },
+];
