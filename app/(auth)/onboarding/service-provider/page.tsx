@@ -24,7 +24,7 @@ async function saveServiceProvider(formData: FormData) {
 
   if (!user) redirect("/login");
 
-  // Make sure user is marked as service_provider
+  // Ensure role is service_provider
   if (user.role !== "service_provider") {
     await prisma.user.update({
       where: { id: user.id },
@@ -49,7 +49,7 @@ async function saveServiceProvider(formData: FormData) {
 export default async function ServiceProviderOnboardingPage({
   searchParams,
 }: {
-  searchParams?: { error?: string; mode?: string };
+  searchParams: Promise<{ error?: string; mode?: string }>;
 }) {
   const session = await auth();
   if (!session?.user?.email) redirect("/login");
@@ -64,25 +64,22 @@ export default async function ServiceProviderOnboardingPage({
 
   if (!user) redirect("/login");
 
-  const error = searchParams?.error;
-  const mode = searchParams?.mode; // optional: "edit"
+  // Next 15: searchParams is async
+  const { error, mode } = await searchParams;
 
   const initialFullName = user.serviceProviderProfile?.fullName ?? "";
   const initialShortBio = user.serviceProviderProfile?.shortBio ?? "";
 
   return (
     <>
-      {/* Background behind the card */}
+      {/* Background */}
       <div className="fixed inset-0 -z-10 bg-[#FFFAFB] dark:bg-[#020617]" />
 
       <main className="min-h-[calc(100vh-80px)] flex items-center justify-center px-4 py-16">
         <section className="w-full max-w-[640px] rounded-[30px] border border-[#E4E4E7] dark:border-[#3F3F46] bg-white dark:bg-[#18181B] px-10 py-10 shadow-sm">
-          {/* Logo */}
+          {/* Logo (swap with real logo if you want) */}
           <div className="flex justify-center mb-8">
-            {/* If you have a logo image, swap this span for <Image /> */}
-            <span className="text-3xl font-bold text-[#EF4F4F]">
-              LC
-            </span>
+            <span className="text-3xl font-bold text-[#EF4F4F]">LC</span>
           </div>
 
           <form action={saveServiceProvider} className="space-y-6">

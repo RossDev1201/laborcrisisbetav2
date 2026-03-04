@@ -31,7 +31,7 @@ async function saveClient(formData: FormData) {
 
   if (!user) redirect("/login");
 
-  // Make sure this user is marked as client
+  // Ensure role is client
   if (user.role !== "client") {
     await prisma.user.update({
       where: { id: user.id },
@@ -51,7 +51,7 @@ async function saveClient(formData: FormData) {
       instagram: instagram || null,
       youtube: youtube || null,
       linkedin: linkedin || null,
-      logoUrl: null, // TODO: set when you wire uploads
+      logoUrl: null, // hook this up when you add uploads
     },
     update: {
       companyName,
@@ -76,7 +76,7 @@ async function saveClient(formData: FormData) {
 export default async function ClientOnboardingPage({
   searchParams,
 }: {
-  searchParams?: { error?: string; mode?: string };
+  searchParams: Promise<{ error?: string; mode?: string }>;
 }) {
   const session = await auth();
   if (!session?.user?.email) redirect("/login");
@@ -102,8 +102,7 @@ export default async function ClientOnboardingPage({
 
   if (!user) redirect("/login");
 
-  const error = searchParams?.error;
-  const mode = searchParams?.mode;
+  const { error, mode } = await searchParams;
 
   const initial = user.clientProfile;
 
