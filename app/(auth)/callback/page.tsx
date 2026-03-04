@@ -1,3 +1,4 @@
+// app/(auth)/callback/page.tsx
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
@@ -8,27 +9,19 @@ export default async function AuthCallbackPage() {
 
   const user = await prisma.user.findUnique({
     where: { email: session.user.email },
-    include: { serviceProviderProfile: true, clientProfile: true },
+    select: {
+      id: true,
+      onboardingComplete: true,
+    },
   });
 
   if (!user) redirect("/login");
 
-  // 1) No role picked yet
-  if (!user.role) redirect("/onboarding/role");
-
-  // 2) Role picked but profile not completed
-  if (user.role === "service_provider") {
-    if (!user.serviceProviderProfile || !user.onboardingComplete) {
-      redirect("/onboarding/service-provider");
-    }
+  // If onboarding is not complete, ALWAYS go to the role chooser first
+  if (!user.onboardingComplete) {
+    redirect("/onboarding/role");
   }
 
-  if (user.role === "client") {
-    if (!user.clientProfile || !user.onboardingComplete) {
-      redirect("/onboarding/client");
-    }
-  }
-
-  // 3) Done → dashboard
+  // Already onboarded → dashboard
   redirect("/dashboard");
 }

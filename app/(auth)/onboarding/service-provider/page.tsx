@@ -17,10 +17,6 @@ async function saveServiceProvider(formData: FormData) {
     redirect("/onboarding/service-provider?error=missing");
   }
 
-  // Resume upload is UI-only for now. We accept the file but don't store it yet.
-  // Later you’ll upload to S3/Vercel Blob/UploadThing and save resumeUrl.
-  // const resume = formData.get("resume") as File | null;
-
   const user = await prisma.user.findUnique({
     where: { email },
     select: { id: true, role: true },
@@ -28,7 +24,7 @@ async function saveServiceProvider(formData: FormData) {
 
   if (!user) redirect("/login");
 
-  // Ensure role is correct (important for first-time Google onboarding)
+  // Make sure user is marked as service_provider
   if (user.role !== "service_provider") {
     await prisma.user.update({
       where: { id: user.id },
@@ -76,58 +72,80 @@ export default async function ServiceProviderOnboardingPage({
 
   return (
     <>
-      <div className="fixed inset-0 -z-10 bg-[#020617]" />
+      {/* Background behind the card */}
+      <div className="fixed inset-0 -z-10 bg-[#FFFAFB] dark:bg-[#020617]" />
 
       <main className="min-h-[calc(100vh-80px)] flex items-center justify-center px-4 py-16">
-        <form
-          action={saveServiceProvider}
-          className="w-full max-w-[900px] rounded-[30px] border border-[#71717A] bg-[#FFFAFB] px-10 py-10"
-        >
-          <div className="space-y-6">
-            <div>
-              <h1 className="text-2xl md:text-3xl font-semibold text-black">
-                {mode === "edit" ? "Update Your Profile" : "Complete Your Profile"}
+        <section className="w-full max-w-[640px] rounded-[30px] border border-[#E4E4E7] dark:border-[#3F3F46] bg-white dark:bg-[#18181B] px-10 py-10 shadow-sm">
+          {/* Logo */}
+          <div className="flex justify-center mb-8">
+            {/* If you have a logo image, swap this span for <Image /> */}
+            <span className="text-3xl font-bold text-[#EF4F4F]">
+              LC
+            </span>
+          </div>
+
+          <form action={saveServiceProvider} className="space-y-6">
+            {/* Heading */}
+            <div className="text-center space-y-2">
+              <h1 className="text-2xl md:text-3xl font-semibold text-[#111827] dark:text-white">
+                {mode === "edit"
+                  ? "Update Your Profile"
+                  : "Complete Your Profile"}
               </h1>
-              <p className="mt-2 text-black/60">
-                Fill in your details to continue.
+              <p className="text-sm text-[#6B7280] dark:text-[#A1A1AA]">
+                Tell us a bit about yourself so we can match you with the best
+                job opportunities.
               </p>
             </div>
 
+            {/* Full Name */}
             <div>
-              <label className="block text-lg font-semibold text-black">
+              <label className="block text-sm font-medium text-[#111827] dark:text-white">
                 Full Name
               </label>
               <input
                 name="fullName"
                 defaultValue={initialFullName}
                 placeholder="Enter your full name"
-                className="mt-2 w-full rounded-xl border border-[#D4D4D8] bg-white px-4 py-3 text-black outline-none focus:ring-2 focus:ring-black/20"
+                className="mt-2 w-full rounded-xl border border-[#E4E4E7] dark:border-[#3F3F46] bg-white dark:bg-[#09090B] px-4 py-3 text-sm text-[#111827] dark:text-white outline-none focus:ring-2 focus:ring-[#EF4F4F]/30"
                 required
               />
             </div>
 
+            {/* Short Bio */}
             <div>
-              <label className="block text-lg font-semibold text-black">
+              <label className="block text-sm font-medium text-[#111827] dark:text-white">
                 Short Bio
               </label>
               <textarea
                 name="shortBio"
                 defaultValue={initialShortBio}
                 placeholder="Tell us about yourself"
-                className="mt-2 w-full min-h-[140px] rounded-xl border border-[#D4D4D8] bg-white px-4 py-3 text-black outline-none focus:ring-2 focus:ring-black/20"
+                className="mt-2 w-full min-h-[140px] rounded-xl border border-[#E4E4E7] dark:border-[#3F3F46] bg-white dark:bg-[#09090B] px-4 py-3 text-sm text-[#111827] dark:text-white outline-none focus:ring-2 focus:ring-[#EF4F4F]/30"
                 required
               />
             </div>
 
+            {/* Resume upload (UI only) */}
             <div>
-              <label className="block text-lg font-semibold text-black">
+              <label className="block text-sm font-medium text-[#111827] dark:text-white">
                 Resume (PDF)
               </label>
-              <div className="mt-2 rounded-xl border border-[#D4D4D8] bg-white p-8 text-center">
-                <div className="text-black/70">Choose a file or drag and drop</div>
-                <div className="text-black/40 mt-1">Application/PDF (2MB)</div>
+              <div className="mt-2 rounded-xl border border-[#E4E4E7] dark:border-[#3F3F46] bg-[#F9FAFB] dark:bg-[#09090B] p-8 text-center">
+                <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-dashed border-[#D4D4D8] dark:border-[#3F3F46]">
+                  <span className="text-2xl text-[#6B7280] dark:text-[#A1A1AA]">
+                    ⬆
+                  </span>
+                </div>
+                <div className="text-sm text-[#4B5563] dark:text-[#E5E7EB]">
+                  Choose a file or drag and drop
+                </div>
+                <div className="mt-1 text-xs text-[#9CA3AF] dark:text-[#A1A1AA]">
+                  Application/PDF (2MB)
+                </div>
 
-                <label className="mt-6 inline-flex cursor-pointer items-center justify-center rounded-xl bg-[#EF4F4F] px-8 py-3 text-white hover:bg-[#e03f3f] transition">
+                <label className="mt-6 inline-flex cursor-pointer items-center justify-center rounded-xl bg-[#EF4F4F] px-8 py-3 text-sm font-medium text-white hover:bg-[#e03f3f] transition">
                   Choose File
                   <input
                     name="resume"
@@ -137,33 +155,36 @@ export default async function ServiceProviderOnboardingPage({
                   />
                 </label>
 
-                <p className="mt-3 text-xs text-black/40">
-                  Upload is coming next. For now, this is UI only.
+                <p className="mt-3 text-xs text-[#9CA3AF] dark:text-[#A1A1AA]">
+                  Upload functionality is coming soon. For now, this is UI only.
                 </p>
               </div>
             </div>
 
             {error === "missing" && (
-              <p className="text-red-600">Please fill required fields.</p>
+              <p className="text-sm text-red-600">
+                Please fill in all required fields.
+              </p>
             )}
 
-            <div className="mt-8 flex items-center justify-center gap-6">
+            {/* Buttons */}
+            <div className="mt-6 flex items-center justify-center gap-6">
               <Link
                 href="/dashboard"
-                className="min-w-[220px] rounded-xl border border-[#339989] px-10 py-3 text-center text-[#339989] hover:bg-[#339989]/10 transition"
+                className="min-w-[160px] rounded-xl border border-[#339989] px-8 py-3 text-center text-sm font-medium text-[#339989] hover:bg-[#339989]/10 transition"
               >
                 Cancel
               </Link>
 
               <button
                 type="submit"
-                className="min-w-[220px] rounded-xl bg-[#EF4F4F] px-10 py-3 text-white hover:bg-[#e03f3f] transition"
+                className="min-w-[160px] rounded-xl bg-[#EF4F4F] px-8 py-3 text-sm font-medium text-white hover:bg-[#e03f3f] transition"
               >
                 Save
               </button>
             </div>
-          </div>
-        </form>
+          </form>
+        </section>
       </main>
     </>
   );
