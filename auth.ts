@@ -1,12 +1,21 @@
-import NextAuth from "next-auth";
-import Google from "next-auth/providers/google";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { prisma } from "@/lib/prisma";
+// auth.ts
+import NextAuth from "next-auth"
+import Google from "next-auth/providers/google"
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import { prisma } from "@/lib/prisma"
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+// This wires up Auth.js (NextAuth v5) with Prisma + Google
+export const { auth, handlers, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
+  secret: process.env.AUTH_SECRET,
 
-  session: { strategy: "jwt" },
+  // We’re using the Session + Session model in Prisma
+  session: {
+    strategy: "database",
+  },
+
+  // Needed on Vercel / behind proxies so Auth.js trusts the host header
+  trustHost: true,
 
   providers: [
     Google({
@@ -15,37 +24,29 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
 
-  pages: { signIn: "/login" },
+  pages: {
+    // Use your custom login page (app/(auth)/login/page.tsx)
+    signIn: "/login",
+  },
 
   callbacks: {
-    async jwt({ token, user }) {
-      // On initial sign-in, user is available
-      if (user) {
-        token.sub = user.id;
-        (token as any).role = (user as any).role ?? null;
-        (token as any).onboardingComplete = (user as any).onboardingComplete ?? false;
-      } else if (token?.email) {
-        // On subsequent requests, refresh token from DB (optional but safest)
-        const dbUser = await prisma.user.findUnique({
-          where: { email: token.email as string },
-          select: { id: true, role: true, onboardingComplete: true },
-        });
-        if (dbUser) {
-          token.sub = dbUser.id;
-          (token as any).role = dbUser.role;
-          (token as any).onboardingComplete = dbUser.onboardingComplete;
-        }
-      }
-      return token;
-    },
-
-    async session({ session, token }) {
+    async session({ session, user }) {
       if (session.user) {
-        (session.user as any).id = token.sub;
-        (session.user as any).role = (token as any).role ?? null;
-        (session.user as any).onboardingComplete = (token as any).onboardingComplete ?? false;
+        // Attach extra fields from Prisma User to the session
+        // so you can use them in the app (e.g. in components)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore - we know these fields exist on our User model
+        session.user.id = user.id
+        // @ts-ignore
+        session.user.role = user.role
+        // @ts-ignore
+        session.user.onboardingComplete = user.onboardingComplete
       }
-      return session;
+      return session
     },
+    // NOTE: no custom `redirect` callback here.
+    // We rely on:
+    // - client `signIn(..., { redirectTo / callbackUrl })`
+    // - /callback and /onboarding/* routes to handle flow.
   },
-});
+})
